@@ -47,7 +47,7 @@ report template are, so expect to translate them for another fitting engine.
 
 Six fresh agent sessions and one autonomous agent fitted two Co/C multilayer curves under this
 procedure, blind, against fits the expert had made and withheld. Every fitted thickness agreed with
-his within 0.03 nm. The procedure was then applied to six published Ru/C curves in twelve sessions,
+his within 0.07 nm, and five of the six sessions within 0.03 nm. The procedure was then applied to six published Ru/C curves in twelve sessions,
 and every period layer agreed within 0.1 nm.
 
 The negative result matters more for anyone reusing this. **The conditioning steps transferred between
