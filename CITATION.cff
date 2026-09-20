@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this procedure, please cite both it and the paper that studied it."
+title: "An XRR fitting procedure for a laboratory LLM agent"
+abstract: >-
+  A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the
+  keyboard and written so that a language-model agent can follow it without further instruction.
+  Thirteen numbered sections, a 22-item report template, and the laboratory's constants marked in place.
+type: dataset
+authors:
+  - family-names: Penkov
+    given-names: Oleksiy
+  - family-names: Peng
+    given-names: Jingjing
+  - family-names: Fu
+    given-names: Haoyu
+keywords:
+  - X-ray reflectivity
+  - multilayer mirror
+  - curve fitting
+  - large language model agent
+  - tacit knowledge
+version: "4"
+date-released: "[CHECK: release date]"
+license: "[CHECK: license]"
+doi: "[CHECK: DOI]"
+repository-code: "[CHECK: repository URL]"
+references:
+  - type: article
+    title: "Teaching a laboratory LLM agent a tacit procedure: an XRR fitting skill"
+    authors:
+      - family-names: Penkov
+        given-names: Oleksiy
+      - family-names: Peng
+        given-names: Jingjing
+      - family-names: Fu
+        given-names: Haoyu
+    notes: "[CHECK: arXiv identifier]"
