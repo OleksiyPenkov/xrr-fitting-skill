@@ -1,0 +1,26 @@
+{
+  "title": "An XRR fitting procedure for a laboratory LLM agent",
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "Penkov, Oleksiy"
+    },
+    {
+      "name": "Peng, Jingjing"
+    },
+    {
+      "name": "Fu, Haoyu"
+    }
+  ],
+  "description": "A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the keyboard and written so that a language-model agent can follow it without further instruction. Thirteen numbered sections, a 22-item report template, and the laboratory's own constants marked in place.\n\nThe record carries the final procedure and the four versions the qualification and transfer sessions actually received, each with its checksum, together with what transferred between two material systems and what did not: the conditioning steps transferred, the rules of verdict did not.",
+  "keywords": [
+    "X-ray reflectivity",
+    "multilayer mirror",
+    "curve fitting",
+    "large language model agent",
+    "tacit knowledge",
+    "reproducibility"
+  ]
+}
