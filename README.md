@@ -71,13 +71,12 @@ a single written intervention. It was not written by an agent and then approved;
 person who had never written it down.
 
 The sessions that ran it, the fits they produced, the curves, and the expert's reference fits are in the
-paper's data deposit [CHECK: data deposit DOI].
+paper's data deposit, which is published with the paper.
 
 ## How to cite
 
-Cite the paper for the method and this record for the artifact.
-
-[CHECK: citation string and DOI, to be filled when this record is published]
+Cite the paper for the method and this repository for the artifact. A DOI is minted when a release of
+this repository is archived, and will be recorded here and in `CITATION.cff` when it exists.
 
 ## License
 
