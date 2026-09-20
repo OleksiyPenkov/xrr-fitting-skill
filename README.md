@@ -1,5 +1,7 @@
 # An XRR fitting procedure for a laboratory LLM agent
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22851595.svg)](https://doi.org/10.5281/zenodo.22851595)
+
 A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the
 keyboard and written so that a language-model agent can follow it without further instruction.
 
@@ -98,8 +100,13 @@ paper's data deposit, which is published with the paper.
 
 ## How to cite
 
-Cite the paper for the method and this repository for the artifact. A DOI is minted when a release of
-this repository is archived, and will be recorded here and in `CITATION.cff` when it exists.
+Cite the paper for the method and this record for the artifact.
+
+> O. V. Penkov, J. Peng, H. Fu, "An XRR fitting procedure for a laboratory LLM agent", version 1.0,
+> Zenodo (2026). doi:10.5281/zenodo.22851595
+
+That DOI resolves to version 1.0 and always will, which is the one to cite when it matters which text
+was used. The concept DOI `10.5281/zenodo.22851594` resolves instead to whichever version is newest.
 
 ## License
 

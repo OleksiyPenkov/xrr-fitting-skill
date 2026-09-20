@@ -19,11 +19,11 @@ keywords:
   - curve fitting
   - large language model agent
   - tacit knowledge
-version: "4"
-date-released: "[CHECK: release date]"
+version: "1.0"
+date-released: "2026-09-20"
 license: CC-BY-4.0
-doi: "[CHECK: DOI]"
-repository-code: "[CHECK: repository URL]"
+doi: 10.5281/zenodo.22851595
+repository-code: "https://github.com/OleksiyPenkov/xrr-fitting-skill"
 references:
   - type: article
     title: "Teaching a laboratory LLM agent a tacit procedure: an XRR fitting skill"
