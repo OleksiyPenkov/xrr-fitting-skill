@@ -81,5 +81,8 @@ Cite the paper for the method and this record for the artifact.
 
 ## License
 
-[CHECK: license, author's decision. The text is prose and a reuser needs to be able to adapt it, so a
-permissive or CC-BY form is the natural fit, but this is not the orchestrator's call.]
+Creative Commons Attribution 4.0 International (CC BY 4.0). Full text in `LICENSE`.
+
+You may use, adapt and redistribute this procedure, including commercially, provided you give credit.
+Adapting it is the expected use: the limits above say which parts are this laboratory's and will need
+replacing.
