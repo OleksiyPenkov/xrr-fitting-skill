@@ -14,7 +14,7 @@
       "name": "Fu, Haoyu"
     }
   ],
-  "description": "A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the keyboard and written so that a language-model agent can follow it without further instruction. Thirteen numbered sections, a 22-item report template, and the laboratory's own constants marked in place.\n\nThe record carries the final procedure and the four versions the qualification and transfer sessions actually received, each with its checksum, together with what transferred between two material systems and what did not: the conditioning steps transferred, the rules of verdict did not.",
+  "description": "A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the keyboard and written so that a language-model agent can follow it without further instruction. Thirteen numbered sections, a 22-item report template, and the laboratory's own constants marked in place.\n\nThe record carries the final procedure and the four versions the qualification and transfer sessions actually received, each with its checksum, together with what transferred between two material systems and what did not: the conditioning steps transferred, the rules of verdict did not.\n\nThe procedure is written against X-Ray Calc 3, the laboratory's X-ray reflectivity simulation and fitting program (https://github.com/OleksiyPenkov/X-RayCalc3). The program supplies the optical model, the cost function and the optimizer; the procedure supplies the conditioning of the curve and the acceptance of the fit, which the program does not decide.",
   "keywords": [
     "X-ray reflectivity",
     "multilayer mirror",
@@ -22,5 +22,25 @@
     "large language model agent",
     "tacit knowledge",
     "reproducibility"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.1107/S1600576724001031",
+      "relation": "isSupplementTo",
+      "scheme": "doi",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1016/j.softx.2020.100528",
+      "relation": "cites",
+      "scheme": "doi",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "10.1109/TNS.2023.3255892",
+      "relation": "cites",
+      "scheme": "doi",
+      "resource_type": "publication-article"
+    }
   ]
 }

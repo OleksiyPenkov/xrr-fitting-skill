@@ -18,6 +18,29 @@ trim, what to free and in what order, when to change the resolution, when a prof
 periodic one, and when a fit may be accepted. Those decisions are the ones no engine and no manual
 specifies, and they are what an operator supplies from practice.
 
+## The software it drives
+
+The procedure is written against **X-Ray Calc 3**, this laboratory's program for simulating and fitting
+X-ray reflectivity, reached through its tool server. The program supplies the optical model, the cost
+function and the optimizer. The procedure supplies what the program does not decide: the conditioning of
+the curve and the acceptance of the fit.
+
+X-Ray Calc 3 is at <https://github.com/OleksiyPenkov/X-RayCalc3>.
+
+If you use the program, cite it:
+
+- O. V. Penkov, M. Li, S. Mikki et al., "X-Ray Calc 3: improved software for simulation and inverse
+  problem solving for X-ray reflectivity", J. Appl. Cryst. 57(2), 555-566 (2024).
+  doi:10.1107/S1600576724001031
+- O. V. Penkov, I. A. Kopylets, M. Khadem et al., "X-Ray Calc: A software for the simulation of X-ray
+  reflectivity", SoftwareX 12, 100528 (2020). doi:10.1016/j.softx.2020.100528
+- M. Li, S. Mikki, P. C. Uzoma et al., "An Efficient Method for the Experimental Characterization of
+  Periodic Multilayer Mirrors: A Global Optimization Approach", IEEE Trans. Nucl. Sci. 70(4), 650-658
+  (2023). doi:10.1109/TNS.2023.3255892
+
+The physics of the procedure is not specific to this program. The step names, the parameter names and the
+report template are, so expect to translate them for another fitting engine.
+
 ## What was tested, and what was found
 
 Six fresh agent sessions and one autonomous agent fitted two Co/C multilayer curves under this
@@ -43,7 +66,7 @@ the two material systems. The rules of verdict did not.**
 4. **The constants are this laboratory's.** The substrate model, the wavelength, and the resolution
    interval are marked "this laboratory" in the text. The rules around them are general; the numbers
    are not.
-5. **It is written in angstroms and it names the tools of one particular server.** The physics is
+5. **It is written in angstroms and it names X-Ray Calc 3's own tools and parameters.** The physics is
    portable; the vocabulary is not. Expect to translate.
 
 ## Versions
