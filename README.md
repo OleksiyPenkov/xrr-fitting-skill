@@ -1,6 +1,6 @@
 # An XRR fitting procedure for a laboratory LLM agent
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22851595.svg)](https://doi.org/10.5281/zenodo.22851595)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22933081.svg)](https://doi.org/10.5281/zenodo.22933081)
 
 A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the
 keyboard and written so that a language-model agent can follow it without further instruction.
@@ -130,10 +130,11 @@ paper's data deposit, which is published with the paper.
 Cite the paper for the method and this record for the artifact.
 
 > O. V. Penkov, J. Peng, H. Fu, "An XRR fitting procedure for a laboratory LLM agent", version 2.0,
-> Zenodo (2026). doi:10.5281/zenodo.22851594
+> Zenodo (2026). doi:10.5281/zenodo.22933081
 
 The concept DOI `10.5281/zenodo.22851594` resolves to the newest version. Each version also has a DOI of
-its own, which is the one to cite when it matters which text was used; version 1.0, the procedure of the
+its own, which is the one to cite when it matters which text was used: version 2.0, the procedure of the
+W/B4C sessions, is doi:10.5281/zenodo.22933081; version 1.0, the procedure of the
 Co/C and Ru/C sessions, is doi:10.5281/zenodo.22851595.
 
 ## License

@@ -23,7 +23,7 @@ keywords:
 version: "2.0"
 date-released: "2026-09-24"
 license: CC-BY-4.0
-doi: 10.5281/zenodo.22851594
+doi: 10.5281/zenodo.22933081
 repository-code: "https://github.com/OleksiyPenkov/xrr-fitting-skill"
 references:
   - type: article
