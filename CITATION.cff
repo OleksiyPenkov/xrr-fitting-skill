@@ -4,7 +4,8 @@ title: "An XRR fitting procedure for a laboratory LLM agent"
 abstract: >-
   A written procedure for fitting a measured X-ray reflectivity curve, elicited from an expert at the
   keyboard and written so that a language-model agent can follow it without further instruction.
-  Thirteen numbered sections, a 22-item report template, and the laboratory's constants marked in place.
+  Thirteen numbered sections and a 22-item report template; the laboratory's constants are in a separate,
+  schema-validated preset file.
 type: dataset
 authors:
   - family-names: Penkov
@@ -19,14 +20,14 @@ keywords:
   - curve fitting
   - large language model agent
   - tacit knowledge
-version: "1.0"
-date-released: "2026-09-20"
+version: "2.0"
+date-released: "2026-09-24"
 license: CC-BY-4.0
-doi: 10.5281/zenodo.22851595
+doi: 10.5281/zenodo.22851594
 repository-code: "https://github.com/OleksiyPenkov/xrr-fitting-skill"
 references:
   - type: article
-    title: "Teaching a laboratory LLM agent a tacit procedure: an XRR fitting skill"
+    title: "Teaching an LLM agent to fit XRR curves with X-Ray Calc 3"
     authors:
       - family-names: Penkov
         given-names: Oleksiy

@@ -1,0 +1,747 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OleksiyPenkov/xrr-fitting-skill/preset.schema.json",
+  "title": "XRR fitting preset",
+  "description": "Laboratory-, instrument- and material-specific constants for the XRR fitting procedure. The procedure text carries only general rules and refers to the keys defined here. One preset describes one instrument at one laboratory.",
+  "type": "object",
+  "required": [
+    "preset_id",
+    "instrument",
+    "substrate",
+    "materials",
+    "surface",
+    "chi2",
+    "optimizer",
+    "single_film",
+    "reporting",
+    "acceptance",
+    "smoothing",
+    "fitting_range",
+    "scale"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "chi2_weights": {
+      "type": "object",
+      "required": [
+        "theta_weight",
+        "point_weight"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "theta_weight": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "point_weight": {
+          "type": "boolean"
+        }
+      }
+    },
+    "interval": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  },
+  "properties": {
+    "preset_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier. Reported in slot 1 with the SHA-256 of this file's raw bytes."
+    },
+    "description": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "string",
+      "description": "Where these constants come from. A value with no measured source must say so here."
+    },
+    "instrument": {
+      "type": "object",
+      "required": [
+        "lambda_A",
+        "resolution_deg",
+        "auto_theta_max_deg"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "lambda_A": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "The wavelength the fit uses. With an unresolved K-alpha doublet (no crystal monochromator) this is the intensity-weighted mean of K-alpha1 and K-alpha2, because an unresolved doublet peaks at its centroid."
+        },
+        "anode": {
+          "type": "string"
+        },
+        "resolution_deg": {
+          "type": "object",
+          "required": [
+            "start",
+            "min",
+            "max"
+          ],
+          "additionalProperties": false,
+          "description": "Delta-theta FWHM in degrees theta. NOT fittable: the engine refuses it. Chosen by a chi-squared re-fit scan (scan_step) and never inherited from another operator's project file. The scanned value conditions the calculated curve to this measurement (it also absorbs the smoothing pass); it is not a measured beam divergence.",
+          "properties": {
+            "start": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "min": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "max": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "scan_step": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Step of the resolution scan. After a fit converges it is re-fitted at each value from min to max in this step and the lowest chi-squared is kept, because the fringe contrast is one feature of the curve while the chi-squared is over the whole fitting range."
+            }
+          }
+        },
+        "auto_theta_max_deg": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Angle below which the automatic scale looks for the measured maximum: the end of the total-reflection plateau."
+        },
+        "theta_unit_in_files": {
+          "type": "string",
+          "enum": [
+            "theta",
+            "2theta"
+          ]
+        }
+      }
+    },
+    "substrate": {
+      "type": "object",
+      "required": [
+        "library",
+        "default"
+      ],
+      "additionalProperties": false,
+      "description": "Substrates live in a separate library so several can be in use at once; a job names one by id. Held fixed either way: the engine does not fit the substrate.",
+      "properties": {
+        "library": {
+          "type": "string"
+        },
+        "default": {
+          "type": "string"
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "required": [
+        "default_rule",
+        "named",
+        "sigma_A"
+      ],
+      "additionalProperties": false,
+      "description": "Density and roughness bounds and start values for layers of the design. Any material not listed in named takes default_rule, so a new material system needs no new text. The light and heavy materials of a period are properties of the job's design, not of this preset.",
+      "properties": {
+        "default_rule": {
+          "type": "object",
+          "required": [
+            "min_fraction_of_bulk",
+            "max_fraction_of_bulk",
+            "start_fraction_of_bulk"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "min_fraction_of_bulk": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "max_fraction_of_bulk": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "start_fraction_of_bulk": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "named": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "density_min",
+              "density_max",
+              "density_start"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "density_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "density_max": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "density_start": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "sigma_A": {
+          "type": "object",
+          "required": [
+            "bounds",
+            "start",
+            "reason"
+          ],
+          "additionalProperties": false,
+          "description": "Roughness (sigma, in A) bounds and start range for every layer of a stack, whatever its material. The single-film exception is single_film.sigma_bounds_A; the substrate and the surface layer carry their own. A laboratory value, not a physical constant: say in reason where it comes from.",
+          "properties": {
+            "bounds": {
+              "$ref": "#/$defs/interval"
+            },
+            "start": {
+              "$ref": "#/$defs/interval",
+              "description": "Range the start value is drawn from, inside bounds."
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "surface": {
+      "type": "object",
+      "required": [
+        "contamination_layer"
+      ],
+      "additionalProperties": false,
+      "description": "The light surface overlayer the procedure adds. Distinct from a cap belonging to the design, which is taken from the design.",
+      "properties": {
+        "contamination_layer": {
+          "type": "object",
+          "required": [
+            "material",
+            "thickness_A",
+            "sigma_A",
+            "density",
+            "include",
+            "bounds"
+          ],
+          "additionalProperties": false,
+          "description": "Carries its own bounds, which are NOT the material bounds of `materials`: a hydrocarbon overlayer is lighter than the sputtered form of the same element.",
+          "properties": {
+            "material": {
+              "type": "string"
+            },
+            "thickness_A": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "sigma_A": {
+              "type": "number",
+              "minimum": 0
+            },
+            "density": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "include": {
+              "type": "string",
+              "enum": [
+                "always",
+                "when_edge_or_fringe_field_misses",
+                "never"
+              ]
+            },
+            "bounds": {
+              "type": "object",
+              "required": [
+                "thickness_A",
+                "sigma_A",
+                "density"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "thickness_A": {
+                  "$ref": "#/$defs/interval"
+                },
+                "sigma_A": {
+                  "$ref": "#/$defs/interval"
+                },
+                "density": {
+                  "$ref": "#/$defs/interval"
+                }
+              }
+            },
+            "sensitivity_variant": {
+              "type": "object",
+              "required": [
+                "thickness_A",
+                "density"
+              ],
+              "additionalProperties": false,
+              "description": "The deliberately thicker, denser overlayer used as a sensitivity variant in section 3. It must differ from the starting layer or the variant probes nothing.",
+              "properties": {
+                "thickness_A": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "density": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "chi2": {
+      "type": "object",
+      "required": [
+        "multilayer",
+        "single_film",
+        "movavg_window"
+      ],
+      "additionalProperties": false,
+      "description": "Weighting of the engine's chi-squared, per stack type: a single film and a multilayer are not weighted alike. Changing any of these changes what a chi-squared threshold means.",
+      "properties": {
+        "multilayer": {
+          "$ref": "#/$defs/chi2_weights"
+        },
+        "single_film": {
+          "$ref": "#/$defs/chi2_weights"
+        },
+        "movavg_window": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "optimizer": {
+      "type": "object",
+      "required": [
+        "population",
+        "iterations",
+        "paired",
+        "poly_order_first",
+        "seeds",
+        "lock_interlayer_thickness"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "population": {
+          "type": "object",
+          "required": [
+            "multilayer",
+            "single_film"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "multilayer": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "single_film": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "iterations": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "paired": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "thickness",
+              "sigma",
+              "density"
+            ]
+          },
+          "description": "Parameters that keep one value over all periods in a profile fit, for every layer."
+        },
+        "poly_order_first": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "range_seed": {
+          "type": "boolean"
+        },
+        "seeds": {
+          "type": "object",
+          "required": [
+            "count"
+          ],
+          "additionalProperties": false,
+          "description": "Every fit is run from several optimizer seeds. The spread of a parameter across the seeds is what the curve leaves undetermined, so it is measured rather than assumed.",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "list": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "description": "Explicit seeds, so a run is reproducible to the last digit. Length must equal count."
+            }
+          }
+        },
+        "lock_interlayer_thickness": {
+          "type": "boolean",
+          "description": "Profile fits: when true, the thickness of every layer the design marks as an interlayer keeps one value over all periods, like the parameters in paired; only the main layers' thicknesses carry a depth profile. Interdiffusion does not drift through the stack when the growth temperature is constant, while deposition rates do."
+        }
+      }
+    },
+    "reporting": {
+      "type": "object",
+      "required": [
+        "undetermined_precision",
+        "model_selection"
+      ],
+      "additionalProperties": false,
+      "description": "How a fit is turned into a reported result: what counts as determined, and when a richer model is preferred to a simpler one.",
+      "properties": {
+        "sum_not_split": {
+          "type": "boolean",
+          "description": "When true, adjacent layers whose thicknesses trade against one another across seeds are reported as their sum, with the split declared undetermined."
+        },
+        "undetermined_precision": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "A parameter whose spread across seeds exceeds the value here is reported as undetermined rather than as a number.",
+          "properties": {
+            "thickness_A": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "sigma_A": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "density": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "period_A": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "model_selection": {
+          "type": "object",
+          "required": [
+            "margin_in_seed_spreads"
+          ],
+          "additionalProperties": false,
+          "description": "A richer model (profile over periodic, a higher polynomial order) is preferred only when it beats the simpler model's chi-squared by this many times the simpler model's own seed-to-seed chi-squared spread. Below that the difference is not distinguishable from the optimizer's own scatter.",
+          "properties": {
+            "margin_in_seed_spreads": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        }
+      }
+    },
+    "single_film": {
+      "type": "object",
+      "required": [
+        "theta_min_deg"
+      ],
+      "additionalProperties": false,
+      "description": "Exceptions that apply when the specimen is one film rather than a stack.",
+      "properties": {
+        "theta_min_deg": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Lower end of the fitting range for a single film of the light material, where the simulated edge shows a shoulder the measurement does not have."
+        },
+        "sigma_bounds_A": {
+          "$ref": "#/$defs/interval"
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "required": [
+        "calibrated_under",
+        "thresholds"
+      ],
+      "additionalProperties": false,
+      "description": "Thresholds the FITTER applies to its own fit in section 10. A threshold carries no further than the conditioning it was fixed under, which calibrated_under records. Agreement tolerances against a withheld reference fit are a different thing and do not belong here: they are the experimenter's, not the fitter's.",
+      "properties": {
+        "calibrated_under": {
+          "type": "object",
+          "required": [
+            "curves",
+            "theta_range_deg",
+            "chi2"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "curves": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "theta_range_deg": {
+              "$ref": "#/$defs/interval"
+            },
+            "chi2": {
+              "type": "object"
+            },
+            "resolution_deg": {
+              "type": "number"
+            },
+            "orders_present": {
+              "type": "integer"
+            },
+            "scale_solve": {
+              "type": "boolean",
+              "description": "Whether chi2_max was fixed with the scale solved (true) or anchored (false). A solved chi-squared is never higher than the anchored one for the same structure, so a threshold fixed under one does not carry to the other."
+            },
+            "scale_solve_window": {
+              "type": "number",
+              "minimum": 0,
+              "description": "The solve window chi2_max was fixed under when scale_solve is true (fit_xrr scale_solve_window); part of the conditioning, because a narrower window can clamp the solve and raise the chi-squared."
+            }
+          }
+        },
+        "thresholds": {
+          "type": "object",
+          "required": [
+            "chi2_max",
+            "order_band_fraction",
+            "edge_factor",
+            "order_visible_factor"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "chi2_max": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "order_band_fraction": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "edge_factor": {
+              "type": "number",
+              "exclusiveMinimum": 1
+            },
+            "order_visible_factor": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "A Bragg order counts as visible when its measured maximum stands this many times above the background."
+            },
+            "chi2_conditioning_alarm": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Above this, the conditioning is wrong rather than the model."
+            },
+            "band_residual_warn": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "near_bound_fraction": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "density": {
+              "type": "string",
+              "enum": [
+                "not_judged"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "interfaces": {
+      "type": "object",
+      "required": [
+        "mode",
+        "pairs"
+      ],
+      "additionalProperties": false,
+      "description": "How the two interfaces of a period are treated. One specular curve cannot divide an interlayer between them. Growth is often asymmetric, but not always and not unconditionally: an asymmetry that holds while the heavy layer grows crystalline can vanish once that layer is thin enough to stay amorphous, so a declaration carries the condition under which it holds. A constraint may also come from a method other than reflectivity, such as TEM or XPS, which is recorded as its evidence.",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "explore",
+            "constrained"
+          ],
+          "description": "explore: no assignment is assumed; the fit is run under each admissible assignment and all are reported with their chi-squared, the split staying undetermined unless a criterion excludes one. constrained: declarations in pairs are applied where their condition holds, and the split is reported as constrained by the declaration."
+        },
+        "pairs": {
+          "type": "object",
+          "description": "Keyed by material pair, e.g. \"W/B4C\". A pair absent here is treated as explore whatever the mode.",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "constraint",
+              "evidence"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "constraint": {
+                "type": "string",
+                "enum": [
+                  "wider_on",
+                  "symmetric",
+                  "undetermined"
+                ],
+                "description": "wider_on: one interface carries the wider interlayer, named in wider_interface. symmetric: the two interlayers are equal, which is the case when neither layer orders. undetermined: explicitly no constraint, recorded so that silence is distinguishable from a considered decision."
+              },
+              "wider_interface": {
+                "type": "string",
+                "description": "Required when constraint is wider_on. Written \"<deposited> on <grown upon>\", e.g. \"W on B4C\"."
+              },
+              "ratio_min": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Optional least ratio of wider to narrower, applied as a bound. Omit when only the ordering is known."
+              },
+              "applies_when": {
+                "type": "object",
+                "additionalProperties": false,
+                "description": "Condition under which the declaration holds, tested against the fitted structure after the fit. When it fails, the declaration does not apply and the pair falls back to explore.",
+                "properties": {
+                  "heavy_thickness_A_min": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "description": "The declaration holds only while the heavy layer is at least this thick, i.e. thick enough to order rather than remain amorphous."
+                  },
+                  "heavy_thickness_A_max": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              },
+              "evidence": {
+                "type": "object",
+                "required": [
+                  "method",
+                  "detail"
+                ],
+                "additionalProperties": false,
+                "description": "What produced the constraint. A constraint with no method is a prior smuggled in as a result.",
+                "properties": {
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "TEM",
+                      "XPS",
+                      "XRR_series",
+                      "literature",
+                      "assumption"
+                    ]
+                  },
+                  "detail": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "specimen": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "smoothing": {
+      "type": "object",
+      "required": [
+        "passes",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "description": "Smoothing of the MEASURED curve before the residual is formed (the engine's smooth {\"passes\": n}). It is not a chi-squared weighting and not a property of the model; it changes the data the fit sees.",
+      "properties": {
+        "passes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of moving-average passes over the measured curve. 0 = off. No count threshold is offered: the benchmark found no brightness at which a pass earns its place, so there is nothing to switch on."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "fitting_range": {
+      "type": "object",
+      "required": [
+        "min_predicted_orders",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "description": "Where the fitting range ends (section 6 rule 4). The range covers at least this many Bragg orders as PREDICTED by the refined period, visible or not, and never runs past the measured end; with that many or more visible it ends half a spacing past the last visible order, as procedure v5 always did.",
+      "properties": {
+        "min_predicted_orders": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Count of predicted orders the range must cover. 7 for this laboratory: the count its bright curves show, and the endpoint at which the benchmark gain has its minimum (FINDINGS R10)."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "scale": {
+      "type": "object",
+      "required": [
+        "solve",
+        "solve_window",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "description": "The scale of the measured curve (section 4). The anchor is set by normalization at the plateau maximum; with solve true the engine then scores every candidate structure at the multiplier of that anchor which minimises its chi-squared, found in closed form and held within a factor of (1 + solve_window) of the anchor either way (fit_xrr scale_solve and scale_solve_window).",
+      "properties": {
+        "solve": {
+          "type": "boolean",
+          "description": "Sent as fit_xrr scale_solve. True: the scale is profiled out within the window. False: the anchored scale is used as it stands, which reproduces numbers from before the option existed."
+        },
+        "solve_window": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Sent as fit_xrr scale_solve_window: |log10(solved / anchored)| <= log10(1 + solve_window). 0 pins the scale to the anchor. A fit whose scale ends on the bound reports scale_clamped true."
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

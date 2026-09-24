@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/OleksiyPenkov/xrr-fitting-skill/substrates.schema.json",
+  "title": "Substrate library",
+  "description": "Substrates available to a fitting job, keyed by id. A job names one id; the preset names the default. Material names are resolved against whatever Henke table the operator's engine was built with, which is extensible: a name absent from the shipped table is not an error, it means the operator supplies that table entry.",
+  "type": "object",
+  "required": ["library_id", "substrates"],
+  "additionalProperties": false,
+  "properties": {
+    "library_id": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "substrates": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Keyed by substrate id, e.g. \"si\", \"soda-lime-glass\". The id is what a job passes.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["material", "density", "sigma_A", "provenance"],
+        "additionalProperties": false,
+        "properties": {
+          "material": {
+            "type": "string",
+            "description": "Henke table name. May be an entry the operator added to their own table."
+          },
+          "density": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "g/cm3. Held fixed: the engine does not fit the substrate."
+          },
+          "sigma_A": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Default roughness in Angstrom. Polish- and supplier-dependent, so it is a starting value for this laboratory's stock, not a property of the material."
+          },
+          "provenance": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Where the density and sigma come from. A value that was never measured must say so."
+          },
+          "requires_table_entry": {
+            "type": "boolean",
+            "description": "True when `material` is not in the stock Henke table and the operator must add it. `table_entry_hint` then says how."
+          },
+          "table_entry_hint": {
+            "type": "string",
+            "description": "Composition or formula sufficient to generate the table entry."
+          },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  }
+}

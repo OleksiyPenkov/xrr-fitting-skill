@@ -1,0 +1,64 @@
+{
+  "library_id": "csmic-substrates-2026-09",
+  "description": "Substrates in use at this laboratory. A fitting job names one id; the preset names the default. Densities are bulk literature values unless the provenance says otherwise; sigma_A is this laboratory's stock polish and is a starting value, not a material property.",
+
+  "substrates": {
+    "si": {
+      "material": "Si",
+      "density": 2.329,
+      "sigma_A": 3.0,
+      "provenance": "Density is the standard bulk value for single-crystal silicon. sigma_A is this laboratory's usual polished-wafer starting value; not measured per batch.",
+      "note": "Polished Si wafer. A native oxide of 10-20 A is present on any wafer not etched immediately before deposition; model it as a separate SiO2 layer when the fit calls for it rather than folding it into sigma."
+    },
+
+    "sio2-fused": {
+      "material": "SiO2",
+      "density": 2.20,
+      "sigma_A": 3.0,
+      "provenance": "Bulk literature value for fused silica. Not measured at this laboratory.",
+      "note": "Fused silica / synthetic quartz glass. Distinct from crystalline quartz (2.65) and from soda-lime glass (~2.5)."
+    },
+
+    "quartz-crystalline": {
+      "material": "Quarts",
+      "density": 2.651,
+      "sigma_A": 3.0,
+      "provenance": "Henke stock table bulk value.",
+      "note": "Crystalline alpha-quartz. This is the value procedure v4 carried for what it called a glass substrate, which was an error; see soda-lime-glass."
+    },
+
+    "soda-lime-glass": {
+      "material": "SodaLimeGlass",
+      "density": 2.50,
+      "sigma_A": 3.8,
+      "provenance": "NOT MEASURED. Conventional density of soda-lime silicate glass: ISO 16293-1:2008, Glass in building - Basic soda lime silicate glass products - Part 1: Definitions and general physical and mechanical properties, clause 5.1, Table 1, 'Density (at 18 degC) 2 500 kg/m3', given there as a generally accepted figure 'where a high degree of accuracy is not required', not a requirement (identical in EN 572-1:2004, clause 6.1, Table 1). Ground C (convention). The composition below is a typical float-glass analysis within the ranges of ISO 16293-1 clause 4.1, not an analysis of this laboratory's stock, which is bought on Taobao without a product datasheet (author, 2026-09-21), so no supplier value can replace the convention.",
+      "requires_table_entry": true,
+      "table_entry_hint": "Not in the stock Henke table; add it. Typical soda-lime float glass by weight: SiO2 72.6, Na2O 13.9, CaO 8.4, MgO 3.9, Al2O3 1.2. Weighted (Z/A)eff is about 0.494 against SiO2's 0.4993, so modelling it as SiO2 at 2.50 reproduces the electron density to roughly one per cent if a table entry is not available.",
+      "note": "The substrate of this laboratory's XRF and XRR multilayer specimens. sigma_A 3.8 is the value procedure v4 used."
+    },
+
+    "sapphire": {
+      "material": "Al2O3",
+      "density": 3.98,
+      "sigma_A": 3.0,
+      "provenance": "Bulk literature value for single-crystal alpha-Al2O3. Not measured at this laboratory.",
+      "requires_table_entry": true,
+      "table_entry_hint": "Not in the stock Henke table; add it. Formula Al2O3, bulk density 3.98 g/cm3."
+    },
+
+    "si3n4": {
+      "material": "Si3N4",
+      "density": 3.17,
+      "sigma_A": 3.0,
+      "provenance": "Henke stock table bulk value. sigma_A assumed, not measured.",
+      "note": "Silicon nitride membrane or coated wafer."
+    },
+
+    "sic": {
+      "material": "SiC",
+      "density": 3.0,
+      "sigma_A": 3.0,
+      "provenance": "Henke stock table bulk value. sigma_A assumed, not measured."
+    }
+  }
+}

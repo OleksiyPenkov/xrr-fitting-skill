@@ -1,0 +1,4 @@
+xrr-fitting-skill.md -text
+versions/v5.0.2-final.md -text
+presets/*.json -text
+substrates.json -text
