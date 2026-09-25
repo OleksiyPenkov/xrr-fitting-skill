@@ -6,7 +6,7 @@ A written procedure for fitting a measured X-ray reflectivity curve, elicited fr
 keyboard and written so that a language-model agent can follow it without further instruction.
 
 This is the procedure studied in "Teaching an LLM agent to fit XRR curves with X-Ray Calc 3" (Penkov, Peng,
-Fu, 2026). It is published separately from the paper because it is usable on its own,
+Fu, 2026, [arXiv:2609.28926](https://arxiv.org/abs/2609.28926)). It is published separately from the paper because it is usable on its own,
 and because a reader who wants the procedure should not have to extract it from a supplement.
 
 ## What it contains
@@ -128,6 +128,9 @@ paper's data deposit, which is published with the paper.
 ## How to cite
 
 Cite the paper for the method and this record for the artifact.
+
+> O. V. Penkov, J. Peng, H. Fu, "Teaching an LLM agent to fit XRR curves with X-Ray Calc 3",
+> arXiv:2609.28926 (2026). doi:10.48550/arXiv.2609.28926
 
 > O. V. Penkov, J. Peng, H. Fu, "An XRR fitting procedure for a laboratory LLM agent", version 2.0,
 > Zenodo (2026). doi:10.5281/zenodo.22933081

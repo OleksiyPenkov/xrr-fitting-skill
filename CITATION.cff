@@ -28,6 +28,10 @@ repository-code: "https://github.com/OleksiyPenkov/xrr-fitting-skill"
 references:
   - type: article
     title: "Teaching an LLM agent to fit XRR curves with X-Ray Calc 3"
+    status: preprint
+    year: 2026
+    doi: 10.48550/arXiv.2609.28926
+    url: "https://arxiv.org/abs/2609.28926"
     authors:
       - family-names: Penkov
         given-names: Oleksiy
